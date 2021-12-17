@@ -1,4 +1,4 @@
-# Project Sentinel
+# NIT-Sentinel
 
 Gatekeeper project for the NIT-Blockchain.
-# NIT-Sentinel
+
