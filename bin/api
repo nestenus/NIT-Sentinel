@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+
+const debug  = require("debug")("gate keeper:server");
+
+const config = require("../config");
+var validator = require("../server/lib/validator");
+const pjson  = require("../package.json");
+
+const host              = config.get("host");
+const port              = config.get("port");
+// const wsport            = config.get("wsport");
+var http = require('http'),
+    httpProxy = require('http-proxy');
+
+var express = require('express');
+var bodyParser = require('body-parser');
+
+
+//
+// Create a proxy server with custom application logic
+//
+var proxy = httpProxy.createProxyServer({});
+
+proxy.on('proxyReq', function(proxyReq, req, res, options) {
+    if(req.body) {
+        let bodyData = JSON.stringify(req.body);
+        proxyReq.setHeader('Content-Type','application/json');
+        proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+        proxyReq.write(bodyData);
+    }
+});
+
+
+const proxyApp = express();
+proxyApp.use(bodyParser.json());
+proxyApp.use(bodyParser.urlencoded({extended: true}));
+proxyApp.use('/:id',async function(req, res){
+
+    if(await validator.validate(req.body, req.params.id)){
+        proxy.web(req, res, {
+            target: config.get('chain:proxy')
+        })
+    }else{
+       res.json({"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null});
+    }
+
+});
+
+http.createServer(proxyApp).listen(port, host, () => {
+    console.log('Proxy server linsten on ',host, " : ",port);
+});
+
+
+
+
+
+
+

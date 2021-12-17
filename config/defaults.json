@@ -1,0 +1,24 @@
+{
+    "host": "0.0.0.0",
+    "port": 4000,
+    "chain": {
+        "proxy": "<blockchain proxy url>",
+        "host": "",
+        "port": 8545,
+        "portWs": 8546
+    },
+    "methods": {
+        "allow": [
+            "eth_gasPrice",
+            "eth_blockNumber",
+            "eth_getBalance",
+            "eth_getTransactionCount",
+            "eth_sendRawTransaction",
+            "eth_estimateGas",
+            "eth_getTransactionReceipt",
+            "web3_clientVersion",
+            "web3_sha3",
+            "net_version"
+        ]
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "name": "sentinel",
+    "version": "0.0.1",
+    "description": "Gate Keeper Proxy ",
+    "main": "index.js",
+    "scripts": {
+        "start": "DEBUG=api:*,knex:* ./bin/api",
+        "test": "mocha test/**/*.js",
+        "rdb-up": "DEBUG=api:* ./db/migrations/up.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@gitlab.com/"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://gitlab.com/issues"
+    },
+    "homepage": "https://gitlab.com/#README",
+    "dependencies": {
+        "big-number": "^2.0.0",
+        "debug": "^4.1.1",
+        "ethereum-tx-decoder": "^2.0.1",
+        "express": "^4.17.1",
+        "http-proxy": "^1.17.0",
+        "knex": "^0.21.2",
+        "nconf": "^0.10.0",
+        "pg": "^8.3.0"
+    },
+    "devDependencies": {}
+}
